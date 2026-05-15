@@ -7,25 +7,31 @@
   <meta name="description" content="ElecAssain Pro – Électricien, plombier et rénovation à Matoury, Guyane française. Disponible 24h/24. Devis gratuit. Garantie décennale. Intervention Cayenne, Matoury, Rémire-Montjoly." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep:     #080C10;
-      --bg-card:     #0F1520;
-      --bg-surface:  #141C2B;
+      --bg-deep:     #05080D;
+      --bg-card:     #0C1220;
+      --bg-surface:  #101825;
+      --bg-glass:    rgba(15,22,38,.65);
       --amber:       #F5C842;
       --amber-dim:   #C49A1A;
+      --amber-glow:  rgba(245,200,66,.18);
       --spark:       #00CFFF;
+      --spark-glow:  rgba(0,207,255,.15);
       --danger:      #FF4C30;
+      --green:       #00C850;
       --text-primary:#F0EDE6;
       --text-muted:  #8A95A8;
-      --border:      rgba(245,200,66,.15);
-      --radius:      10px;
+      --border:      rgba(245,200,66,.12);
+      --border-bright: rgba(245,200,66,.28);
+      --radius:      12px;
+      --radius-lg:   20px;
       --gap:         clamp(1.5rem, 4vw, 3rem);
+      --transition:  .25s cubic-bezier(.4,0,.2,1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -36,23 +42,35 @@
       line-height: 1.6;
     }
 
+    /* ─── SCROLL PROGRESS ─── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--amber), var(--spark));
+      z-index: 9999;
+      transition: width .1s linear;
+      box-shadow: 0 0 12px rgba(245,200,66,.6);
+    }
+
     /* ─── CIRCUIT BACKGROUND ─── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(245,200,66,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(245,200,66,.04) 1px, transparent 1px),
-        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(0,207,255,.07) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(245,200,66,.06) 0%, transparent 60%);
+        linear-gradient(rgba(245,200,66,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,200,66,.03) 1px, transparent 1px),
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(0,207,255,.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(245,200,66,.05) 0%, transparent 60%);
       background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
       pointer-events: none;
       z-index: 0;
     }
 
     /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
     ::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 3px; }
 
@@ -64,19 +82,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: .9rem clamp(1.2rem, 5vw, 4rem);
-      background: rgba(8,12,16,.85);
-      backdrop-filter: blur(14px);
+      padding: .85rem clamp(1.2rem, 5vw, 4rem);
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       animation: fadeDown .6s ease both;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(5,8,13,.92);
+      box-shadow: 0 4px 32px rgba(0,0,0,.4);
     }
 
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       letter-spacing: .08em;
       color: var(--amber);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .nav-logo .logo-bolt {
+      width: 22px; height: 22px;
+      filter: drop-shadow(0 0 6px rgba(245,200,66,.8));
     }
     .nav-logo span { color: var(--spark); }
 
@@ -91,9 +122,20 @@
       font-size: .9rem;
       font-weight: 500;
       letter-spacing: .04em;
-      transition: color .2s;
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--amber);
+      transition: width var(--transition);
     }
     .nav-links a:hover { color: var(--amber); }
+    .nav-links a:hover::after { width: 100%; }
 
     .nav-cta {
       display: flex;
@@ -107,12 +149,20 @@
       padding: .55rem 1.2rem;
       border-radius: var(--radius);
       text-decoration: none;
-      transition: background .2s, transform .15s;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 0 0 rgba(245,200,66,0);
     }
-    .nav-cta:hover { background: #ffe168; transform: translateY(-1px); }
+    .nav-cta:hover {
+      background: #ffe168;
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px rgba(245,200,66,.4);
+    }
 
-    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .burger span { display: block; width: 24px; height: 2px; background: var(--amber); border-radius: 2px; transition: all .3s; }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* ─── HERO ─── */
     #hero {
@@ -121,7 +171,11 @@
       align-items: center;
       padding: 7rem clamp(1.2rem, 6vw, 6rem) 4rem;
       position: relative;
+      overflow: hidden;
     }
+
+    /* Particle canvas */
+    #particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
     .hero-inner {
       display: grid;
@@ -139,42 +193,48 @@
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      background: rgba(245,200,66,.1);
-      border: 1px solid rgba(245,200,66,.3);
+      background: rgba(245,200,66,.08);
+      border: 1px solid rgba(245,200,66,.25);
       color: var(--amber);
       font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .1em;
+      font-weight: 700;
+      letter-spacing: .12em;
       text-transform: uppercase;
       padding: .4rem 1rem;
       border-radius: 50px;
       margin-bottom: 1.5rem;
       animation: fadeUp .7s .1s ease both;
+      backdrop-filter: blur(8px);
     }
     .badge-dot {
       width: 7px; height: 7px;
-      background: var(--amber);
+      background: var(--green);
       border-radius: 50%;
       animation: pulse 1.4s ease-in-out infinite;
+      box-shadow: 0 0 6px var(--green);
     }
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.2rem, 7vw, 6rem);
-      line-height: .95;
+      font-size: clamp(3.4rem, 7vw, 6.5rem);
+      line-height: .92;
       letter-spacing: .02em;
       margin-bottom: 1.5rem;
       animation: fadeUp .7s .2s ease both;
     }
-    .hero-title .line-accent { color: var(--amber); }
-    .hero-title .line-spark  { color: var(--spark); }
+    .hero-title .line-accent {
+      color: var(--amber);
+      filter: drop-shadow(0 0 24px rgba(245,200,66,.35));
+    }
+    .hero-title .line-spark  { color: var(--spark); filter: drop-shadow(0 0 24px rgba(0,207,255,.35)); }
 
     .hero-desc {
       color: var(--text-muted);
       font-size: 1.05rem;
-      max-width: 480px;
-      margin-bottom: 2rem;
+      max-width: 490px;
+      margin-bottom: 2.2rem;
       animation: fadeUp .7s .3s ease both;
+      line-height: 1.75;
     }
 
     .hero-actions {
@@ -188,32 +248,45 @@
       display: inline-flex;
       align-items: center;
       gap: .55rem;
-      background: var(--amber);
+      background: linear-gradient(135deg, var(--amber) 0%, #ffd000 100%);
       color: #000;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 1rem;
-      padding: .85rem 1.8rem;
+      padding: .9rem 1.9rem;
       border-radius: var(--radius);
       text-decoration: none;
-      transition: background .2s, transform .15s, box-shadow .2s;
-      box-shadow: 0 0 30px rgba(245,200,66,.25);
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+      box-shadow: 0 0 30px rgba(245,200,66,.3), 0 4px 16px rgba(0,0,0,.3);
+      position: relative;
+      overflow: hidden;
     }
-    .btn-primary:hover { background: #ffe168; transform: translateY(-2px); box-shadow: 0 0 50px rgba(245,200,66,.4); }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ffe168, var(--amber));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(245,200,66,.5), 0 8px 24px rgba(0,0,0,.4); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary > * { position: relative; z-index: 1; }
 
     .btn-ghost {
       display: inline-flex;
       align-items: center;
       gap: .55rem;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid var(--border-bright);
       color: var(--text-primary);
       font-weight: 600;
       font-size: 1rem;
-      padding: .85rem 1.8rem;
+      padding: .9rem 1.9rem;
       border-radius: var(--radius);
       text-decoration: none;
-      transition: border-color .2s, color .2s;
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+      backdrop-filter: blur(8px);
     }
-    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); background: rgba(245,200,66,.06); }
 
     .hero-stats {
       display: grid;
@@ -230,15 +303,29 @@
       background: var(--bg-card);
       padding: 1.2rem 1rem;
       text-align: center;
+      transition: background var(--transition);
+      position: relative;
     }
+    .stat::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .stat:hover { background: #0f1a2e; }
+    .stat:hover::after { opacity: 1; }
     .stat-number {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
+      font-size: 2.2rem;
       color: var(--amber);
       display: block;
       letter-spacing: .05em;
+      filter: drop-shadow(0 0 12px rgba(245,200,66,.4));
     }
-    .stat-label { font-size: .78rem; color: var(--text-muted); letter-spacing: .04em; }
+    .stat-label { font-size: .75rem; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; }
 
     /* HERO VISUAL */
     .hero-visual {
@@ -251,35 +338,62 @@
 
     .bolt-container {
       position: relative;
-      width: 280px;
-      height: 280px;
+      width: 320px;
+      height: 320px;
     }
 
     .bolt-ring {
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      border: 1.5px solid rgba(245,200,66,.2);
-      animation: ringPulse 2s ease-in-out infinite;
+      border: 1.5px solid rgba(245,200,66,.18);
+      animation: ringPulse 2.5s ease-in-out infinite;
     }
-    .bolt-ring:nth-child(2) { inset: -20px; animation-delay: .4s; border-color: rgba(0,207,255,.15); }
-    .bolt-ring:nth-child(3) { inset: -40px; animation-delay: .8s; border-color: rgba(245,200,66,.08); }
+    .bolt-ring:nth-child(2) {
+      inset: -28px;
+      animation-delay: .5s;
+      border-color: rgba(0,207,255,.12);
+    }
+    .bolt-ring:nth-child(3) {
+      inset: -56px;
+      animation-delay: 1s;
+      border-color: rgba(245,200,66,.06);
+    }
 
     .bolt-core {
       position: absolute;
       inset: 20px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(245,200,66,.15) 0%, rgba(0,207,255,.05) 60%, transparent 100%);
+      background: radial-gradient(circle, rgba(245,200,66,.12) 0%, rgba(0,207,255,.04) 60%, transparent 100%);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .bolt-svg {
-      width: 130px;
-      filter: drop-shadow(0 0 20px rgba(245,200,66,.8)) drop-shadow(0 0 50px rgba(245,200,66,.3));
+      width: 145px;
+      filter: drop-shadow(0 0 24px rgba(245,200,66,.9)) drop-shadow(0 0 60px rgba(245,200,66,.4));
       animation: boltFlash 3s ease-in-out infinite;
     }
+
+    /* floating chips */
+    .hero-chip {
+      position: absolute;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-bright);
+      border-radius: 50px;
+      padding: .45rem 1rem;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: .06em;
+      backdrop-filter: blur(12px);
+      white-space: nowrap;
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-chip.c1 { top: 12%; right: -10px; animation-delay: 0s; }
+    .hero-chip.c2 { bottom: 22%; left: -16px; animation-delay: 1.5s; color: var(--spark); border-color: rgba(0,207,255,.3); }
+    .hero-chip.c3 { top: 62%; right: -14px; animation-delay: .8s; color: var(--green); border-color: rgba(0,200,80,.3); }
 
     /* ─── TRUST BAR ─── */
     .trust-bar {
@@ -288,20 +402,33 @@
       background: var(--bg-surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 1rem clamp(1.2rem, 6vw, 6rem);
+      padding: 1rem 0;
       overflow: hidden;
     }
+    .trust-bar::before, .trust-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .trust-bar::before { left: 0; background: linear-gradient(90deg, var(--bg-surface), transparent); }
+    .trust-bar::after  { right: 0; background: linear-gradient(-90deg, var(--bg-surface), transparent); }
+
     .trust-track {
       display: flex;
       gap: 3rem;
       align-items: center;
-      animation: scrollLeft 18s linear infinite;
+      animation: scrollLeft 20s linear infinite;
       width: max-content;
     }
+    .trust-track:hover { animation-play-state: paused; }
+
     .trust-item {
       display: flex;
       align-items: center;
-      gap: .6rem;
+      gap: .55rem;
       font-size: .88rem;
       font-weight: 500;
       color: var(--text-muted);
@@ -319,17 +446,27 @@
     }
 
     .section-label {
-      font-size: .78rem;
+      font-size: .74rem;
       font-weight: 700;
-      letter-spacing: .15em;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--amber);
       margin-bottom: .8rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
     }
+    .section-label::before {
+      content: '';
+      width: 20px; height: 1.5px;
+      background: var(--amber);
+      border-radius: 1px;
+    }
+
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      line-height: 1;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: .95;
       letter-spacing: .03em;
       margin-bottom: 1rem;
     }
@@ -338,6 +475,7 @@
       max-width: 560px;
       font-size: 1rem;
       margin-bottom: var(--gap);
+      line-height: 1.75;
     }
 
     /* ─── SERVICES ─── */
@@ -346,119 +484,135 @@
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5px;
+      gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       overflow: hidden;
     }
 
     .service-card {
       background: var(--bg-card);
-      padding: 2rem 1.8rem;
-      transition: background .25s;
+      padding: 2.2rem 2rem;
+      transition: background var(--transition), transform var(--transition);
       cursor: default;
+      position: relative;
+      overflow: hidden;
     }
-    .service-card:hover { background: #111A2B; }
-    .service-card:hover .service-icon { transform: scale(1.1); }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), var(--spark));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .service-card:hover { background: #0e192e; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover .service-icon { transform: scale(1.12) rotate(-3deg); }
 
     .service-icon {
-      width: 52px; height: 52px;
-      background: rgba(245,200,66,.1);
+      width: 56px; height: 56px;
+      background: var(--amber-glow);
       border: 1px solid rgba(245,200,66,.2);
-      border-radius: 12px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.3rem;
-      transition: transform .3s;
-      font-size: 1.5rem;
+      margin-bottom: 1.4rem;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+      font-size: 1.6rem;
     }
 
     .service-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       letter-spacing: .04em;
       color: var(--text-primary);
       margin-bottom: .6rem;
     }
-
-    .service-desc { color: var(--text-muted); font-size: .92rem; line-height: 1.65; }
+    .service-desc { color: var(--text-muted); font-size: .92rem; line-height: 1.7; }
 
     .service-tags {
       display: flex;
       flex-wrap: wrap;
       gap: .4rem;
-      margin-top: 1.2rem;
+      margin-top: 1.3rem;
     }
     .tag {
-      font-size: .72rem;
-      font-weight: 600;
+      font-size: .7rem;
+      font-weight: 700;
       letter-spacing: .06em;
-      padding: .3rem .75rem;
+      padding: .3rem .8rem;
       border-radius: 50px;
-      background: rgba(245,200,66,.08);
+      background: var(--amber-glow);
       border: 1px solid rgba(245,200,66,.18);
       color: var(--amber);
     }
-    .tag.blue {
-      background: rgba(0,207,255,.08);
-      border-color: rgba(0,207,255,.18);
-      color: var(--spark);
-    }
-    .tag.red {
-      background: rgba(255,76,48,.08);
-      border-color: rgba(255,76,48,.18);
-      color: var(--danger);
-    }
+    .tag.blue { background: var(--spark-glow); border-color: rgba(0,207,255,.18); color: var(--spark); }
+    .tag.red  { background: rgba(255,76,48,.08); border-color: rgba(255,76,48,.18); color: var(--danger); }
+    .tag.green { background: rgba(0,200,80,.08); border-color: rgba(0,200,80,.18); color: var(--green); }
 
     /* ─── WHY US ─── */
     .why-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 5rem;
       align-items: center;
     }
 
-    .why-items { display: flex; flex-direction: column; gap: 1.5rem; }
+    .why-items { display: flex; flex-direction: column; gap: 1.2rem; }
 
     .why-item {
       display: flex;
       gap: 1.2rem;
       align-items: flex-start;
-      padding: 1.4rem;
+      padding: 1.4rem 1.5rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      transition: border-color .2s, transform .2s;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
     }
-    .why-item:hover { border-color: rgba(245,200,66,.35); transform: translateX(4px); }
+    .why-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at left center, rgba(245,200,66,.04), transparent 70%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .why-item:hover {
+      border-color: rgba(245,200,66,.3);
+      transform: translateX(6px);
+      box-shadow: -3px 0 0 var(--amber), 0 4px 20px rgba(0,0,0,.2);
+    }
+    .why-item:hover::after { opacity: 1; }
 
     .why-icon {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       flex-shrink: 0;
-      margin-top: .1rem;
+      margin-top: .05rem;
+      filter: drop-shadow(0 0 8px rgba(245,200,66,.3));
     }
-
-    .why-text h3 {
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: .3rem;
-    }
-    .why-text p { color: var(--text-muted); font-size: .9rem; }
+    .why-text h3 { font-weight: 700; font-size: 1.05rem; margin-bottom: .3rem; }
+    .why-text p  { color: var(--text-muted); font-size: .9rem; line-height: 1.65; }
 
     .why-visual {
       position: relative;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .decennale-badge {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      padding: 2.8rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -469,17 +623,24 @@
       inset: 0;
       background: radial-gradient(circle at 50% 0%, rgba(245,200,66,.08) 0%, transparent 70%);
     }
+    .decennale-badge::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    }
     .decennale-number {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 7rem;
+      font-size: 8rem;
       line-height: 1;
       color: var(--amber);
       display: block;
       letter-spacing: -.02em;
-      filter: drop-shadow(0 0 30px rgba(245,200,66,.4));
+      filter: drop-shadow(0 0 40px rgba(245,200,66,.5));
     }
     .decennale-label {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -487,8 +648,102 @@
     }
     .decennale-sub { font-size: .82rem; color: var(--text-muted); margin-top: .5rem; }
 
+    /* mini stat cards alongside */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .mini-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      text-align: center;
+      transition: border-color var(--transition);
+    }
+    .mini-stat:hover { border-color: var(--border-bright); }
+    .mini-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--spark);
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(0,207,255,.35));
+    }
+    .mini-stat-label { font-size: .73rem; color: var(--text-muted); letter-spacing: .05em; }
+
+    /* ─── TESTIMONIALS ─── */
+    #temoignages { background: var(--bg-surface); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .testi-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.3), 0 0 30px rgba(245,200,66,.06);
+    }
+    .testi-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px; right: 20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 8rem;
+      color: var(--amber);
+      opacity: .07;
+      line-height: 1;
+    }
+
+    .stars {
+      display: flex;
+      gap: .2rem;
+      margin-bottom: 1rem;
+    }
+    .stars span { color: var(--amber); font-size: 1rem; }
+
+    .testi-text {
+      color: var(--text-muted);
+      font-size: .95rem;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+    }
+    .testi-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--amber-glow), var(--spark-glow));
+      border: 2px solid var(--border-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+    .testi-name { font-weight: 700; font-size: .95rem; }
+    .testi-role { font-size: .78rem; color: var(--text-muted); }
+
     /* ─── ZONE ─── */
-    #zone { background: var(--bg-surface); }
+    #zone { background: var(--bg-deep); }
 
     .zone-grid {
       display: grid;
@@ -513,37 +768,100 @@
       gap: .7rem;
       font-weight: 600;
       font-size: .95rem;
-      transition: border-color .2s;
+      transition: border-color var(--transition), transform var(--transition);
     }
-    .city-card:hover { border-color: rgba(245,200,66,.35); }
+    .city-card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
     .city-pin { color: var(--amber); font-size: 1.1rem; }
     .city-main { color: var(--amber); }
 
-    .zone-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+    .zone-info { display: flex; flex-direction: column; gap: 1.2rem; }
 
     .info-block {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.5rem;
+      transition: border-color var(--transition);
     }
+    .info-block:hover { border-color: var(--border-bright); }
     .info-block h3 { font-weight: 700; font-size: 1rem; margin-bottom: .5rem; }
-    .info-block p, .info-block a {
-      color: var(--text-muted);
-      font-size: .92rem;
-    }
+    .info-block p, .info-block a { color: var(--text-muted); font-size: .92rem; }
     .info-block a { color: var(--amber); text-decoration: none; }
     .info-block a:hover { text-decoration: underline; }
+
+    /* ─── FAQ ─── */
+    #faq { background: var(--bg-surface); }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .faq-item.open { border-color: var(--border-bright); }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.3rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: .97rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: color var(--transition);
+    }
+    .faq-q:hover { color: var(--amber); }
+    .faq-arrow {
+      width: 22px; height: 22px;
+      border: 1.5px solid var(--border-bright);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+      color: var(--text-muted);
+    }
+    .faq-item.open .faq-arrow {
+      transform: rotate(45deg);
+      border-color: var(--amber);
+      background: var(--amber-glow);
+      color: var(--amber);
+    }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+      color: var(--text-muted);
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding: 0 1.5rem 1.3rem;
+    }
 
     /* ─── CONTACT ─── */
     #contact { background: var(--bg-deep); }
 
     .contact-inner {
-      max-width: 900px;
+      max-width: 860px;
       margin: 0 auto;
       text-align: center;
     }
@@ -551,7 +869,7 @@
     .contact-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
       padding: clamp(2rem, 5vw, 4rem);
       position: relative;
       overflow: hidden;
@@ -562,20 +880,34 @@
       top: 0; left: 0; right: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--amber), var(--spark), var(--amber));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(245,200,66,.05) 0%, transparent 60%);
+      pointer-events: none;
     }
 
     .contact-phone {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
       letter-spacing: .06em;
       color: var(--amber);
       display: block;
       text-decoration: none;
-      filter: drop-shadow(0 0 30px rgba(245,200,66,.35));
-      transition: filter .2s;
+      filter: drop-shadow(0 0 30px rgba(245,200,66,.4));
+      transition: filter var(--transition), letter-spacing var(--transition);
       margin: 1.5rem 0;
+      position: relative;
+      z-index: 1;
     }
-    .contact-phone:hover { filter: drop-shadow(0 0 50px rgba(245,200,66,.7)); }
+    .contact-phone:hover {
+      filter: drop-shadow(0 0 60px rgba(245,200,66,.75));
+      letter-spacing: .09em;
+    }
 
     .contact-meta {
       display: flex;
@@ -583,13 +915,15 @@
       gap: 2rem;
       flex-wrap: wrap;
       margin-top: 2rem;
+      position: relative;
+      z-index: 1;
     }
     .contact-meta-item {
       display: flex;
       align-items: center;
       gap: .5rem;
       color: var(--text-muted);
-      font-size: .9rem;
+      font-size: .88rem;
     }
     .contact-meta-item svg { color: var(--amber); }
 
@@ -597,22 +931,25 @@
       display: inline-flex;
       align-items: center;
       gap: .4rem;
-      background: rgba(0,200,80,.12);
+      background: rgba(0,200,80,.1);
       border: 1px solid rgba(0,200,80,.25);
-      color: #00C850;
-      font-size: .82rem;
+      color: var(--green);
+      font-size: .78rem;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: .1em;
       text-transform: uppercase;
       padding: .35rem .9rem;
       border-radius: 50px;
       margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
     }
     .open-dot {
       width: 7px; height: 7px;
-      background: #00C850;
+      background: var(--green);
       border-radius: 50%;
       animation: pulse 1.4s ease-in-out infinite;
+      box-shadow: 0 0 6px var(--green);
     }
 
     /* ─── WHATSAPP FAB ─── */
@@ -627,48 +964,36 @@
       background: #25D366;
       color: #fff;
       border-radius: 50px;
-      padding: .85rem 1.4rem .85rem 1rem;
+      padding: .9rem 1.4rem .9rem 1rem;
       text-decoration: none;
       font-weight: 700;
       font-size: .9rem;
       letter-spacing: .03em;
       box-shadow: 0 4px 24px rgba(37,211,102,.45);
-      transition: transform .2s, box-shadow .2s, padding .3s;
+      transition: transform var(--transition), box-shadow var(--transition);
       animation: fadeUp .7s .8s ease both;
       overflow: hidden;
     }
-    .wa-fab svg {
-      width: 26px;
-      height: 26px;
-      flex-shrink: 0;
-    }
+    .wa-fab svg { width: 26px; height: 26px; flex-shrink: 0; }
     .wa-fab:hover {
       transform: translateY(-3px) scale(1.04);
-      box-shadow: 0 8px 36px rgba(37,211,102,.6);
+      box-shadow: 0 8px 36px rgba(37,211,102,.65);
     }
-    .wa-label {
-      max-width: 80px;
-      overflow: hidden;
-      transition: max-width .3s ease, opacity .3s ease;
-    }
+    .wa-label { max-width: 80px; overflow: hidden; transition: max-width .3s ease, opacity .3s ease; }
     .wa-ping {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 10px;
-      height: 10px;
+      top: 6px; right: 6px;
+      width: 10px; height: 10px;
       border-radius: 50%;
       background: #fff;
       animation: waPing 2s ease-in-out infinite;
     }
-
     @keyframes waPing {
       0%, 100% { transform: scale(1); opacity: .9; }
-      50%       { transform: scale(1.6); opacity: 0; }
+      50%       { transform: scale(1.7); opacity: 0; }
     }
-
     @media (max-width: 480px) {
-      .wa-fab { padding: .85rem; border-radius: 50%; }
+      .wa-fab { padding: .9rem; border-radius: 50%; }
       .wa-label { max-width: 0; opacity: 0; }
       .wa-fab svg { width: 28px; height: 28px; }
     }
@@ -679,84 +1004,103 @@
       z-index: 1;
       background: var(--bg-surface);
       border-top: 1px solid var(--border);
-      padding: 2rem clamp(1.2rem, 6vw, 6rem);
+      padding: 2.5rem clamp(1.2rem, 6vw, 6rem);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .footer-brand {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: var(--amber);
       letter-spacing: .08em;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
     }
     .footer-brand span { color: var(--spark); }
 
-    .footer-copy { color: var(--text-muted); font-size: .82rem; }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--amber); }
+
+    .footer-copy { color: var(--text-muted); font-size: .8rem; }
 
     /* ─── ANIMATIONS ─── */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeLeft {
-      from { opacity: 0; transform: translateX(32px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeUp   { from { opacity: 0; transform: translateY(28px);  } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeLeft { from { opacity: 0; transform: translateX(36px);  } to { opacity: 1; transform: translateX(0); } }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: .5; transform: scale(1.3); }
+      50%       { opacity: .5; transform: scale(1.35); }
     }
     @keyframes ringPulse {
-      0%, 100% { transform: scale(1); opacity: .7; }
-      50%       { transform: scale(1.04); opacity: .3; }
+      0%, 100% { transform: scale(1); opacity: .65; }
+      50%       { transform: scale(1.05); opacity: .25; }
     }
     @keyframes boltFlash {
-      0%, 85%, 100% { opacity: 1; filter: drop-shadow(0 0 20px rgba(245,200,66,.8)) drop-shadow(0 0 50px rgba(245,200,66,.3)); }
-      90%            { opacity: .6; filter: drop-shadow(0 0 40px rgba(245,200,66,1)) drop-shadow(0 0 80px rgba(0,207,255,.5)); }
+      0%, 82%, 100% { opacity: 1; filter: drop-shadow(0 0 24px rgba(245,200,66,.9)) drop-shadow(0 0 60px rgba(245,200,66,.4)); }
+      88%            { opacity: .5; filter: drop-shadow(0 0 50px rgba(245,200,66,1)) drop-shadow(0 0 100px rgba(0,207,255,.6)); }
     }
     @keyframes scrollLeft {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
 
     /* ─── REVEAL ON SCROLL ─── */
     .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .65s ease, transform .65s ease;
+      transform: translateY(32px);
+      transition: opacity .6s ease, transform .6s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
-      .hero-inner  { grid-template-columns: 1fr; text-align: center; }
-      .hero-desc   { margin: 0 auto 2rem; }
+      .hero-inner   { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc    { margin: 0 auto 2rem; }
       .hero-actions { justify-content: center; }
-      .hero-stats  { grid-template-columns: repeat(3, 1fr); }
-      .hero-visual { order: -1; }
-      .bolt-container { width: 200px; height: 200px; }
-      .bolt-svg { width: 90px; }
-      .why-grid  { grid-template-columns: 1fr; }
-      .zone-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .burger { display: flex; }
+      .hero-stats   { grid-template-columns: repeat(3, 1fr); }
+      .hero-visual  { order: -1; }
+      .bolt-container { width: 220px; height: 220px; }
+      .bolt-svg     { width: 96px; }
+      .hero-chip    { display: none; }
+      .why-grid     { grid-template-columns: 1fr; }
+      .zone-grid    { grid-template-columns: 1fr; }
+      .faq-grid     { grid-template-columns: 1fr; }
+      .nav-links    { display: none; }
+      .burger       { display: flex; }
     }
-
     @media (max-width: 560px) {
-      .hero-stats { grid-template-columns: 1fr; }
-      .zone-cities { grid-template-columns: 1fr; }
+      .hero-stats   { grid-template-columns: 1fr; }
+      .zone-cities  { grid-template-columns: 1fr; }
       .contact-meta { flex-direction: column; align-items: center; }
+      .mini-stats   { grid-template-columns: 1fr 1fr; }
     }
 
     /* mobile menu */
@@ -764,8 +1108,9 @@
       display: flex;
       flex-direction: column;
       position: fixed;
-      top: 56px; left: 0; right: 0;
-      background: rgba(8,12,16,.97);
+      top: 57px; left: 0; right: 0;
+      background: rgba(5,8,13,.97);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 1.5rem 2rem;
       gap: 1.2rem;
@@ -774,13 +1119,23 @@
 </head>
 <body>
 
+<div id="scroll-progress"></div>
+<canvas id="particles"></canvas>
+
 <!-- ─── NAVBAR ─── -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">ElecAssain<span>Pro</span></a>
+  <a href="#hero" class="nav-logo">
+    <svg class="logo-bolt" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="#F5C842"/>
+    </svg>
+    ElecAssain<span>Pro</span>
+  </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
     <li><a href="#pourquoi">Pourquoi nous</a></li>
+    <li><a href="#temoignages">Avis</a></li>
     <li><a href="#zone">Zone</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="tel:0789728608" class="nav-cta">
@@ -802,7 +1157,7 @@
       </div>
       <h1 class="hero-title">
         <span class="line-accent">Électricité</span><br>
-        Plomberie &<br>
+        Plomberie &amp;<br>
         <span class="line-spark">Rénovation</span>
       </h1>
       <p class="hero-desc">
@@ -812,7 +1167,7 @@
       <div class="hero-actions">
         <a href="tel:0789728608" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 5.61 5.61l1.06-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Appeler maintenant
+          <span>Appeler maintenant</span>
         </a>
         <a href="#services" class="btn-ghost">
           Voir nos services
@@ -854,6 +1209,9 @@
           </svg>
         </div>
       </div>
+      <span class="hero-chip c1">⚡ NF C 15-100</span>
+      <span class="hero-chip c2">💧 Urgence 24h</span>
+      <span class="hero-chip c3">✓ Garantie 10 ans</span>
     </div>
   </div>
 </section>
@@ -861,56 +1219,19 @@
 <!-- ─── TRUST BAR ─── -->
 <div class="trust-bar">
   <div class="trust-track">
-    <!-- repeated twice for seamless loop -->
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Devis gratuit
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Garantie décennale
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Intervention rapide 24h/24
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Particuliers &amp; professionnels
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Cayenne · Matoury · Rémire-Montjoly
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Mise aux normes NF C 15-100
-    </div>
-    <!-- duplicate -->
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Devis gratuit
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Garantie décennale
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Intervention rapide 24h/24
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Particuliers &amp; professionnels
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Cayenne · Matoury · Rémire-Montjoly
-    </div>
-    <div class="trust-item">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Mise aux normes NF C 15-100
-    </div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Devis gratuit</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Garantie décennale</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Intervention rapide 24h/24</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Particuliers &amp; professionnels</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Cayenne · Matoury · Rémire-Montjoly</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Mise aux normes NF C 15-100</div>
+    <!-- duplicate for seamless loop -->
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Devis gratuit</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Garantie décennale</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Intervention rapide 24h/24</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Particuliers &amp; professionnels</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Cayenne · Matoury · Rémire-Montjoly</div>
+    <div class="trust-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Mise aux normes NF C 15-100</div>
   </div>
 </div>
 
@@ -925,7 +1246,7 @@
       <div class="service-card reveal">
         <div class="service-icon">⚡</div>
         <h3 class="service-title">Électricité</h3>
-        <p class="service-desc">Installation, mise aux normes, dépannage et tableau électrique. Nous garantissons des travaux conformes à la norme NF C 15-100.</p>
+        <p class="service-desc">Installation, mise aux normes, dépannage et tableau électrique. Travaux conformes à la norme NF C 15-100, garantis.</p>
         <div class="service-tags">
           <span class="tag">Tableau électrique</span>
           <span class="tag">Mise aux normes</span>
@@ -937,7 +1258,7 @@
       <div class="service-card reveal">
         <div class="service-icon">🔧</div>
         <h3 class="service-title">Plomberie</h3>
-        <p class="service-desc">Fuite, installation sanitaire, chauffe-eau, tuyauterie — nous intervenons rapidement pour résoudre tous vos problèmes de plomberie.</p>
+        <p class="service-desc">Fuite, installation sanitaire, chauffe-eau, tuyauterie — intervention rapide pour tous vos problèmes de plomberie.</p>
         <div class="service-tags">
           <span class="tag blue">Fuite d'eau</span>
           <span class="tag blue">Chauffe-eau</span>
@@ -949,7 +1270,7 @@
       <div class="service-card reveal">
         <div class="service-icon">🏗️</div>
         <h3 class="service-title">Rénovation</h3>
-        <p class="service-desc">Rénovation complète de logement — peinture, carrelage, cloisons, faux-plafonds. Votre projet de A à Z avec un seul interlocuteur.</p>
+        <p class="service-desc">Rénovation complète de logement — peinture, carrelage, cloisons, faux-plafonds. Votre projet de A à Z, un seul interlocuteur.</p>
         <div class="service-tags">
           <span class="tag red">Peinture</span>
           <span class="tag red">Carrelage</span>
@@ -961,11 +1282,11 @@
       <div class="service-card reveal">
         <div class="service-icon">🚨</div>
         <h3 class="service-title">Urgences 24h/24</h3>
-        <p class="service-desc">Panne électrique, fuite d'eau, problème urgent ? Nous sommes disponibles tous les jours, toute la nuit, pour intervenir en urgence.</p>
+        <p class="service-desc">Panne électrique ou fuite d'eau urgente ? Disponibles tous les jours et toutes les nuits pour intervenir en priorité.</p>
         <div class="service-tags">
-          <span class="tag">7j/7</span>
-          <span class="tag">24h/24</span>
-          <span class="tag">Intervention rapide</span>
+          <span class="tag green">7j/7</span>
+          <span class="tag green">24h/24</span>
+          <span class="tag green">Intervention rapide</span>
         </div>
       </div>
     </div>
@@ -978,7 +1299,7 @@
     <div class="why-grid">
       <div>
         <p class="section-label reveal">Pourquoi nous choisir</p>
-        <h2 class="section-title reveal">Sérieux &amp; savoir-faire</h2>
+        <h2 class="section-title reveal">Sérieux &amp;<br>savoir-faire</h2>
         <p class="section-sub reveal">Plus qu'un prestataire, un partenaire de confiance pour vos travaux en Guyane.</p>
 
         <div class="why-items">
@@ -1007,17 +1328,82 @@
             <div class="why-icon">🤝</div>
             <div class="why-text">
               <h3>Particuliers &amp; professionnels</h3>
-              <p>Qu'il s'agisse d'un appartement, d'une villa ou d'un local commercial, nous nous adaptons à chaque projet.</p>
+              <p>Appartement, villa ou local commercial — nous nous adaptons à chaque projet et budget.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="why-visual reveal">
-        <div class="decennale-badge">
+      <div class="why-visual">
+        <div class="decennale-badge reveal">
           <span class="decennale-number">10</span>
           <div class="decennale-label">ans de garantie</div>
           <div class="decennale-sub">Garantie décennale incluse<br>sur tous nos travaux</div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat reveal">
+            <span class="mini-stat-num">24/7</span>
+            <span class="mini-stat-label">Disponibilité</span>
+          </div>
+          <div class="mini-stat reveal">
+            <span class="mini-stat-num">100%</span>
+            <span class="mini-stat-label">Devis gratuit</span>
+          </div>
+          <div class="mini-stat reveal">
+            <span class="mini-stat-num">3</span>
+            <span class="mini-stat-label">Zones couvertes</span>
+          </div>
+          <div class="mini-stat reveal">
+            <span class="mini-stat-num">NF</span>
+            <span class="mini-stat-label">Normes C 15-100</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="temoignages">
+  <div class="section-pad">
+    <p class="section-label reveal">Témoignages</p>
+    <h2 class="section-title reveal">Ce que disent nos clients</h2>
+    <p class="section-sub reveal">La satisfaction de nos clients, notre meilleure récompense.</p>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-text">« Intervention ultra-rapide pour une panne électrique. Professionnel, efficace et prix correct. Je recommande vivement ElecAssain Pro ! »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Marie-Claude R.</div>
+            <div class="testi-role">Particulier – Cayenne</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-text">« Rénovation complète de notre salle de bain — impeccable du début à la fin. Équipe sérieuse, ponctuelle et le résultat est parfait. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">J</div>
+          <div>
+            <div class="testi-name">Jean-Baptiste T.</div>
+            <div class="testi-role">Propriétaire – Matoury</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-text">« Fuite d'eau détectée un dimanche soir, ils sont venus en moins d'une heure. Service irréprochable et tarif honnête. Merci ! »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sandra K.</div>
+            <div class="testi-role">Gérante – Rémire-Montjoly</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1037,20 +1423,11 @@
           <div class="city-card reveal">
             <span class="city-pin">📍</span>
             <span class="city-main">Matoury</span>
-            <small style="color:var(--text-muted);font-size:.75rem;margin-left:auto;">Siège</small>
+            <small style="color:var(--text-muted);font-size:.72rem;margin-left:auto;">Siège</small>
           </div>
-          <div class="city-card reveal">
-            <span class="city-pin">📍</span>
-            Cayenne
-          </div>
-          <div class="city-card reveal">
-            <span class="city-pin">📍</span>
-            Rémire-Montjoly
-          </div>
-          <div class="city-card reveal">
-            <span class="city-pin">📍</span>
-            Alentours
-          </div>
+          <div class="city-card reveal"><span class="city-pin">📍</span>Cayenne</div>
+          <div class="city-card reveal"><span class="city-pin">📍</span>Rémire-Montjoly</div>
+          <div class="city-card reveal"><span class="city-pin">📍</span>Alentours</div>
         </div>
       </div>
 
@@ -1072,15 +1449,72 @@
   </div>
 </section>
 
+<!-- ─── FAQ ─── -->
+<section id="faq">
+  <div class="section-pad">
+    <p class="section-label reveal" style="justify-content:center;">Questions fréquentes</p>
+    <h2 class="section-title reveal" style="text-align:center;">Vos questions,<br>nos réponses</h2>
+    <p class="section-sub reveal" style="margin:0 auto var(--gap);text-align:center;">Tout ce que vous devez savoir avant de nous contacter.</p>
+
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Intervenez-vous en urgence la nuit ?
+          <span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a">Oui, nous sommes disponibles 24h/24 et 7j/7 y compris la nuit, les week-ends et les jours fériés. Appelez-nous à tout moment au 07 89 72 86 08.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Le devis est-il vraiment gratuit ?
+          <span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a">Absolument. Nous établissons un devis détaillé et chiffré sans aucun engagement de votre part. Pas de frais cachés, pas de surprise sur la facture finale.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Qu'est-ce que la garantie décennale ?
+          <span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a">La garantie décennale couvre tous nos travaux pendant 10 ans après réception du chantier. En cas de malfaçon ou de problème lié à notre intervention, nous prenons en charge les réparations.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Intervenez-vous pour les professionnels ?
+          <span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a">Oui, nous travaillons aussi bien avec les particuliers (appartements, villas) qu'avec les professionnels (commerces, bureaux, bâtiments industriels). Contactez-nous pour un devis adapté.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Quelle est votre zone géographique ?
+          <span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a">Basés à Matoury, nous intervenons principalement à Cayenne, Matoury et Rémire-Montjoly, ainsi que dans leurs environs. N'hésitez pas à nous appeler pour vérifier si nous couvrons votre secteur.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Comment contacter ElecAssain Pro rapidement ?
+          <span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a">Le moyen le plus rapide est de nous appeler directement au 07 89 72 86 08. Vous pouvez aussi nous envoyer un message via WhatsApp grâce au bouton flottant en bas de page.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── CONTACT ─── -->
 <section id="contact">
   <div class="section-pad">
     <div class="contact-inner">
-      <p class="section-label reveal">Contact</p>
-      <h2 class="section-title reveal">Demandez votre devis gratuit</h2>
-      <p class="section-sub reveal" style="margin:0 auto var(--gap);">
-        Appelez-nous maintenant ou laissez-nous un message. Nous répondons rapidement.
-      </p>
+      <p class="section-label reveal" style="justify-content:center;">Contact</p>
+      <h2 class="section-title reveal">Demandez votre<br>devis gratuit</h2>
+      <p class="section-sub reveal" style="margin:0 auto var(--gap);">Appelez-nous maintenant ou laissez-nous un message. Nous répondons rapidement.</p>
 
       <div class="contact-card reveal">
         <div class="open-pill">
@@ -1088,12 +1522,12 @@
           Ouvert maintenant — 24h/24
         </div>
 
-        <p style="color:var(--text-muted);font-size:.95rem;">Appelez directement</p>
+        <p style="color:var(--text-muted);font-size:.95rem;position:relative;z-index:1;">Appelez directement</p>
         <a href="tel:0789728608" class="contact-phone">07 89 72 86 08</a>
 
-        <a href="tel:0789728608" class="btn-primary" style="font-size:1.1rem;padding:1rem 2.5rem;margin:0 auto;display:inline-flex;">
+        <a href="tel:0789728608" class="btn-primary" style="font-size:1.1rem;padding:1rem 2.5rem;margin:0 auto;display:inline-flex;position:relative;z-index:1;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 5.61 5.61l1.06-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Appeler ElecAssain Pro
+          <span>Appeler ElecAssain Pro</span>
         </a>
 
         <div class="contact-meta">
@@ -1126,30 +1560,114 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-brand">ElecAssain<span>Pro</span></div>
-  <p class="footer-copy">© 2025 ElecAssain Pro — Matoury, Guyane française</p>
-  <p class="footer-copy">Électricité · Plomberie · Rénovation</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg style="width:20px;height:20px;filter:drop-shadow(0 0 6px rgba(245,200,66,.8))" viewBox="0 0 100 140" fill="none"><path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="#F5C842"/></svg>
+      ElecAssain<span>Pro</span>
+    </div>
+    <nav class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#pourquoi">Pourquoi nous</a>
+      <a href="#temoignages">Avis</a>
+      <a href="#zone">Zone</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="footer-copy">© 2025 ElecAssain Pro — Matoury, Guyane française · Électricité · Plomberie · Rénovation</p>
+  </div>
 </footer>
 
 <script>
-  // Mobile menu
+  /* ─── SCROLL PROGRESS ─── */
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    progressBar.style.width = pct + '%';
+  }, { passive: true });
+
+  /* ─── NAVBAR SCROLL STATE ─── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ─── MOBILE MENU ─── */
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');
-  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
 
-  // Scroll reveal
+  /* ─── SCROLL REVEAL ─── */
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        entry.target.style.transitionDelay = (i * 0.07) + 's';
-        entry.target.classList.add('visible');
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
         io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
   revealEls.forEach(el => io.observe(el));
+
+  /* ─── FAQ ACCORDION ─── */
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ─── PARTICLE CANVAS ─── */
+  (function () {
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    const N = 60;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    for (let i = 0; i < N; i++) {
+      particles.push({
+        x: rand(0, W), y: rand(0, H),
+        vx: rand(-.3, .3), vy: rand(-.3, .3),
+        r: rand(.8, 2.2),
+        a: rand(.2, .7),
+        color: Math.random() > .5 ? '#F5C842' : '#00CFFF'
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.a;
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
 </script>
 </body>
 </html>
