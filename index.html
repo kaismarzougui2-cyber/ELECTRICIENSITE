@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElecAssain Pro – Électricien Matoury, Guyane | 07 89 72 86 08</title>
+  <meta name="description" content="ElecAssain Pro – Électricien, plombier et rénovation à Matoury, Guyane française. Disponible 24h/24. Devis gratuit. Garantie décennale. Intervention Cayenne, Matoury, Rémire-Montjoly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep:     #080C10;
+      --bg-card:     #0F1520;
+      --bg-surface:  #141C2B;
+      --amber:       #F5C842;
+      --amber-dim:   #C49A1A;
+      --spark:       #00CFFF;
+      --danger:      #FF4C30;
+      --text-primary:#F0EDE6;
+      --text-muted:  #8A95A8;
+      --border:      rgba(245,200,66,.15);
+      --radius:      10px;
+      --gap:         clamp(1.5rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── CIRCUIT BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245,200,66,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,200,66,.04) 1px, transparent 1px),
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(0,207,255,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(245,200,66,.06) 0%, transparent 60%);
+      background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .9rem clamp(1.2rem, 5vw, 4rem);
+      background: rgba(8,12,16,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      animation: fadeDown .6s ease both;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: .08em;
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--spark); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--amber);
+      color: #000;
+      font-weight: 700;
+      font-size: .85rem;
+      letter-spacing: .06em;
+      padding: .55rem 1.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: #ffe168; transform: translateY(-1px); }
+
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--amber); border-radius: 2px; transition: all .3s; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem clamp(1.2rem, 6vw, 6rem) 4rem;
+      position: relative;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(245,200,66,.1);
+      border: 1px solid rgba(245,200,66,.3);
+      color: var(--amber);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: var(--amber);
+      border-radius: 50%;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      line-height: .95;
+      letter-spacing: .02em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .hero-title .line-accent { color: var(--amber); }
+    .hero-title .line-spark  { color: var(--spark); }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin-bottom: 2rem;
+      animation: fadeUp .7s .3s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp .7s .4s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      background: var(--amber);
+      color: #000;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: .85rem 1.8rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 0 30px rgba(245,200,66,.25);
+    }
+    .btn-primary:hover { background: #ffe168; transform: translateY(-2px); box-shadow: 0 0 50px rgba(245,200,66,.4); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      border: 1.5px solid var(--border);
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: .85rem 1.8rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 2.5rem;
+      animation: fadeUp .7s .5s ease both;
+    }
+    .stat {
+      background: var(--bg-card);
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--amber);
+      display: block;
+      letter-spacing: .05em;
+    }
+    .stat-label { font-size: .78rem; color: var(--text-muted); letter-spacing: .04em; }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeLeft .8s .3s ease both;
+      position: relative;
+    }
+
+    .bolt-container {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+
+    .bolt-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid rgba(245,200,66,.2);
+      animation: ringPulse 2s ease-in-out infinite;
+    }
+    .bolt-ring:nth-child(2) { inset: -20px; animation-delay: .4s; border-color: rgba(0,207,255,.15); }
+    .bolt-ring:nth-child(3) { inset: -40px; animation-delay: .8s; border-color: rgba(245,200,66,.08); }
+
+    .bolt-core {
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,200,66,.15) 0%, rgba(0,207,255,.05) 60%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bolt-svg {
+      width: 130px;
+      filter: drop-shadow(0 0 20px rgba(245,200,66,.8)) drop-shadow(0 0 50px rgba(245,200,66,.3));
+      animation: boltFlash 3s ease-in-out infinite;
+    }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem clamp(1.2rem, 6vw, 6rem);
+      overflow: hidden;
+    }
+    .trust-track {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      animation: scrollLeft 18s linear infinite;
+      width: max-content;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .trust-item svg { color: var(--amber); flex-shrink: 0; }
+
+    /* ─── SECTION BASE ─── */
+    section { position: relative; z-index: 1; }
+
+    .section-pad {
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 6vw, 6rem);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: .03em;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      max-width: 560px;
+      font-size: 1rem;
+      margin-bottom: var(--gap);
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--bg-surface); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      padding: 2rem 1.8rem;
+      transition: background .25s;
+      cursor: default;
+    }
+    .service-card:hover { background: #111A2B; }
+    .service-card:hover .service-icon { transform: scale(1.1); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(245,200,66,.1);
+      border: 1px solid rgba(245,200,66,.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.3rem;
+      transition: transform .3s;
+      font-size: 1.5rem;
+    }
+
+    .service-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: .04em;
+      color: var(--text-primary);
+      margin-bottom: .6rem;
+    }
+
+    .service-desc { color: var(--text-muted); font-size: .92rem; line-height: 1.65; }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: 1.2rem;
+    }
+    .tag {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: .3rem .75rem;
+      border-radius: 50px;
+      background: rgba(245,200,66,.08);
+      border: 1px solid rgba(245,200,66,.18);
+      color: var(--amber);
+    }
+    .tag.blue {
+      background: rgba(0,207,255,.08);
+      border-color: rgba(0,207,255,.18);
+      color: var(--spark);
+    }
+    .tag.red {
+      background: rgba(255,76,48,.08);
+      border-color: rgba(255,76,48,.18);
+      color: var(--danger);
+    }
+
+    /* ─── WHY US ─── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .why-items { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .why-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color .2s, transform .2s;
+    }
+    .why-item:hover { border-color: rgba(245,200,66,.35); transform: translateX(4px); }
+
+    .why-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    .why-text h3 {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: .3rem;
+    }
+    .why-text p { color: var(--text-muted); font-size: .9rem; }
+
+    .why-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .decennale-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .decennale-badge::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(245,200,66,.08) 0%, transparent 70%);
+    }
+    .decennale-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 7rem;
+      line-height: 1;
+      color: var(--amber);
+      display: block;
+      letter-spacing: -.02em;
+      filter: drop-shadow(0 0 30px rgba(245,200,66,.4));
+    }
+    .decennale-label {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .decennale-sub { font-size: .82rem; color: var(--text-muted); margin-top: .5rem; }
+
+    /* ─── ZONE ─── */
+    #zone { background: var(--bg-surface); }
+
+    .zone-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .zone-cities {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+    }
+
+    .city-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: border-color .2s;
+    }
+    .city-card:hover { border-color: rgba(245,200,66,.35); }
+    .city-pin { color: var(--amber); font-size: 1.1rem; }
+    .city-main { color: var(--amber); }
+
+    .zone-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .info-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .info-block h3 { font-weight: 700; font-size: 1rem; margin-bottom: .5rem; }
+    .info-block p, .info-block a {
+      color: var(--text-muted);
+      font-size: .92rem;
+    }
+    .info-block a { color: var(--amber); text-decoration: none; }
+    .info-block a:hover { text-decoration: underline; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--bg-deep); }
+
+    .contact-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(2rem, 5vw, 4rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--spark), var(--amber));
+    }
+
+    .contact-phone {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      letter-spacing: .06em;
+      color: var(--amber);
+      display: block;
+      text-decoration: none;
+      filter: drop-shadow(0 0 30px rgba(245,200,66,.35));
+      transition: filter .2s;
+      margin: 1.5rem 0;
+    }
+    .contact-phone:hover { filter: drop-shadow(0 0 50px rgba(245,200,66,.7)); }
+
+    .contact-meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .contact-meta-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--text-muted);
+      font-size: .9rem;
+    }
+    .contact-meta-item svg { color: var(--amber); }
+
+    .open-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(0,200,80,.12);
+      border: 1px solid rgba(0,200,80,.25);
+      color: #00C850;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .35rem .9rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .open-dot {
+      width: 7px; height: 7px;
+      background: #00C850;
+      border-radius: 50%;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 2rem clamp(1.2rem, 6vw, 6rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--amber);
+      letter-spacing: .08em;
+    }
+    .footer-brand span { color: var(--spark); }
+
+    .footer-copy { color: var(--text-muted); font-size: .82rem; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(32px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.3); }
+    }
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); opacity: .7; }
+      50%       { transform: scale(1.04); opacity: .3; }
+    }
+    @keyframes boltFlash {
+      0%, 85%, 100% { opacity: 1; filter: drop-shadow(0 0 20px rgba(245,200,66,.8)) drop-shadow(0 0 50px rgba(245,200,66,.3)); }
+      90%            { opacity: .6; filter: drop-shadow(0 0 40px rgba(245,200,66,1)) drop-shadow(0 0 80px rgba(0,207,255,.5)); }
+    }
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── REVEAL ON SCROLL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-inner  { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc   { margin: 0 auto 2rem; }
+      .hero-actions { justify-content: center; }
+      .hero-stats  { grid-template-columns: repeat(3, 1fr); }
+      .hero-visual { order: -1; }
+      .bolt-container { width: 200px; height: 200px; }
+      .bolt-svg { width: 90px; }
+      .why-grid  { grid-template-columns: 1fr; }
+      .zone-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+    }
+
+    @media (max-width: 560px) {
+      .hero-stats { grid-template-columns: 1fr; }
+      .zone-cities { grid-template-columns: 1fr; }
+      .contact-meta { flex-direction: column; align-items: center; }
+    }
+
+    /* mobile menu */
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: rgba(8,12,16,.97);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      gap: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">ElecAssain<span>Pro</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pourquoi">Pourquoi nous</a></li>
+    <li><a href="#zone">Zone</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:0789728608" class="nav-cta">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 5.61 5.61l1.06-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    07 89 72 86 08
+  </a>
+  <div class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Disponible 24h/24 — 7j/7
+      </div>
+      <h1 class="hero-title">
+        <span class="line-accent">Électricité</span><br>
+        Plomberie &<br>
+        <span class="line-spark">Rénovation</span>
+      </h1>
+      <p class="hero-desc">
+        ElecAssain Pro intervient chez les particuliers et professionnels en Guyane.
+        Service rapide, fiable et garanti — devis gratuit, garantie décennale.
+      </p>
+      <div class="hero-actions">
+        <a href="tel:0789728608" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 5.61 5.61l1.06-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Appeler maintenant
+        </a>
+        <a href="#services" class="btn-ghost">
+          Voir nos services
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">24H</span>
+          <span class="stat-label">Disponibilité</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">10 ANS</span>
+          <span class="stat-label">Garantie décennale</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Devis gratuit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="bolt-container">
+        <div class="bolt-ring"></div>
+        <div class="bolt-ring"></div>
+        <div class="bolt-ring"></div>
+        <div class="bolt-core">
+          <svg class="bolt-svg" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="#F5C842" stroke="#F5C842" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="url(#boltGrad)"/>
+            <defs>
+              <linearGradient id="boltGrad" x1="50" y1="5" x2="50" y2="135" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFE168"/>
+                <stop offset="100%" stop-color="#F5C842" stop-opacity=".7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUST BAR ─── -->
+<div class="trust-bar">
+  <div class="trust-track">
+    <!-- repeated twice for seamless loop -->
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Devis gratuit
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Garantie décennale
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Intervention rapide 24h/24
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Particuliers &amp; professionnels
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Cayenne · Matoury · Rémire-Montjoly
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Mise aux normes NF C 15-100
+    </div>
+    <!-- duplicate -->
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Devis gratuit
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Garantie décennale
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Intervention rapide 24h/24
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Particuliers &amp; professionnels
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Cayenne · Matoury · Rémire-Montjoly
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Mise aux normes NF C 15-100
+    </div>
+  </div>
+</div>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="section-pad">
+    <p class="section-label reveal">Nos expertises</p>
+    <h2 class="section-title reveal">Ce que nous faisons</h2>
+    <p class="section-sub reveal">Électricité, plomberie et rénovation — une seule entreprise pour tous vos besoins.</p>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">⚡</div>
+        <h3 class="service-title">Électricité</h3>
+        <p class="service-desc">Installation, mise aux normes, dépannage et tableau électrique. Nous garantissons des travaux conformes à la norme NF C 15-100.</p>
+        <div class="service-tags">
+          <span class="tag">Tableau électrique</span>
+          <span class="tag">Mise aux normes</span>
+          <span class="tag">Dépannage</span>
+          <span class="tag">Éclairage</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🔧</div>
+        <h3 class="service-title">Plomberie</h3>
+        <p class="service-desc">Fuite, installation sanitaire, chauffe-eau, tuyauterie — nous intervenons rapidement pour résoudre tous vos problèmes de plomberie.</p>
+        <div class="service-tags">
+          <span class="tag blue">Fuite d'eau</span>
+          <span class="tag blue">Chauffe-eau</span>
+          <span class="tag blue">Sanitaires</span>
+          <span class="tag blue">Tuyauterie</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🏗️</div>
+        <h3 class="service-title">Rénovation</h3>
+        <p class="service-desc">Rénovation complète de logement — peinture, carrelage, cloisons, faux-plafonds. Votre projet de A à Z avec un seul interlocuteur.</p>
+        <div class="service-tags">
+          <span class="tag red">Peinture</span>
+          <span class="tag red">Carrelage</span>
+          <span class="tag red">Cloisons</span>
+          <span class="tag red">Finitions</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🚨</div>
+        <h3 class="service-title">Urgences 24h/24</h3>
+        <p class="service-desc">Panne électrique, fuite d'eau, problème urgent ? Nous sommes disponibles tous les jours, toute la nuit, pour intervenir en urgence.</p>
+        <div class="service-tags">
+          <span class="tag">7j/7</span>
+          <span class="tag">24h/24</span>
+          <span class="tag">Intervention rapide</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY US ─── -->
+<section id="pourquoi">
+  <div class="section-pad">
+    <div class="why-grid">
+      <div>
+        <p class="section-label reveal">Pourquoi nous choisir</p>
+        <h2 class="section-title reveal">Sérieux &amp; savoir-faire</h2>
+        <p class="section-sub reveal">Plus qu'un prestataire, un partenaire de confiance pour vos travaux en Guyane.</p>
+
+        <div class="why-items">
+          <div class="why-item reveal">
+            <div class="why-icon">🛡️</div>
+            <div class="why-text">
+              <h3>Garantie décennale</h3>
+              <p>Tous nos travaux sont couverts par une garantie décennale. Votre investissement est protégé pendant 10 ans.</p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-icon">📋</div>
+            <div class="why-text">
+              <h3>Devis gratuit &amp; transparent</h3>
+              <p>Nous établissons un devis détaillé sans engagement. Pas de surprise sur la facture.</p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-icon">⚡</div>
+            <div class="why-text">
+              <h3>Réactivité maximale</h3>
+              <p>Disponibles 24h/24 et 7j/7 pour les urgences, nous priorisons les interventions rapides.</p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-icon">🤝</div>
+            <div class="why-text">
+              <h3>Particuliers &amp; professionnels</h3>
+              <p>Qu'il s'agisse d'un appartement, d'une villa ou d'un local commercial, nous nous adaptons à chaque projet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-visual reveal">
+        <div class="decennale-badge">
+          <span class="decennale-number">10</span>
+          <div class="decennale-label">ans de garantie</div>
+          <div class="decennale-sub">Garantie décennale incluse<br>sur tous nos travaux</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ZONE ─── -->
+<section id="zone">
+  <div class="section-pad">
+    <p class="section-label reveal">Zone d'intervention</p>
+    <h2 class="section-title reveal">Toute la Guyane</h2>
+    <p class="section-sub reveal">Basés à Matoury, nous intervenons dans Cayenne et ses environs.</p>
+
+    <div class="zone-grid">
+      <div>
+        <div class="zone-cities">
+          <div class="city-card reveal">
+            <span class="city-pin">📍</span>
+            <span class="city-main">Matoury</span>
+            <small style="color:var(--text-muted);font-size:.75rem;margin-left:auto;">Siège</small>
+          </div>
+          <div class="city-card reveal">
+            <span class="city-pin">📍</span>
+            Cayenne
+          </div>
+          <div class="city-card reveal">
+            <span class="city-pin">📍</span>
+            Rémire-Montjoly
+          </div>
+          <div class="city-card reveal">
+            <span class="city-pin">📍</span>
+            Alentours
+          </div>
+        </div>
+      </div>
+
+      <div class="zone-info">
+        <div class="info-block reveal">
+          <h3>📍 Notre adresse</h3>
+          <p>133 Chem. de la Levée<br>Matoury 97351, Guyane française</p>
+        </div>
+        <div class="info-block reveal">
+          <h3>📞 Téléphone</h3>
+          <a href="tel:0789728608">07 89 72 86 08</a>
+        </div>
+        <div class="info-block reveal">
+          <h3>🕐 Horaires</h3>
+          <p>Ouvert <strong style="color:var(--amber)">24h/24</strong> — tous les jours de la semaine.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="section-pad">
+    <div class="contact-inner">
+      <p class="section-label reveal">Contact</p>
+      <h2 class="section-title reveal">Demandez votre devis gratuit</h2>
+      <p class="section-sub reveal" style="margin:0 auto var(--gap);">
+        Appelez-nous maintenant ou laissez-nous un message. Nous répondons rapidement.
+      </p>
+
+      <div class="contact-card reveal">
+        <div class="open-pill">
+          <span class="open-dot"></span>
+          Ouvert maintenant — 24h/24
+        </div>
+
+        <p style="color:var(--text-muted);font-size:.95rem;">Appelez directement</p>
+        <a href="tel:0789728608" class="contact-phone">07 89 72 86 08</a>
+
+        <a href="tel:0789728608" class="btn-primary" style="font-size:1.1rem;padding:1rem 2.5rem;margin:0 auto;display:inline-flex;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 5.61 5.61l1.06-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Appeler ElecAssain Pro
+        </a>
+
+        <div class="contact-meta">
+          <div class="contact-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            133 Chem. de la Levée, Matoury 97351
+          </div>
+          <div class="contact-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Disponible 24h/24
+          </div>
+          <div class="contact-meta-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Garantie décennale
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-brand">ElecAssain<span>Pro</span></div>
+  <p class="footer-copy">© 2025 ElecAssain Pro — Matoury, Guyane française</p>
+  <p class="footer-copy">Électricité · Plomberie · Rénovation</p>
+</footer>
+
+<script>
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = (i * 0.07) + 's';
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
