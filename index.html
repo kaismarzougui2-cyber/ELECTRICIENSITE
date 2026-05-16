@@ -10,16 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep:     #080C10;
-      --bg-card:     #0F1520;
-      --bg-surface:  #141C2B;
-      --amber:       #F5C842;
-      --amber-dim:   #C49A1A;
-      --spark:       #00CFFF;
+      --bg-deep:     #060D0A;
+      --bg-card:     #0C1610;
+      --bg-surface:  #101D14;
+      --green:       #8ED63A;
+      --green-dim:   #5EA820;
+      --blue:        #38C2E8;
       --danger:      #FF4C30;
-      --text-primary:#F0EDE6;
-      --text-muted:  #8A95A8;
-      --border:      rgba(245,200,66,.15);
+      --text-primary:#EDF5EC;
+      --text-muted:  #7A9488;
+      --border:      rgba(142,214,58,.14);
       --radius:      10px;
       --gap:         clamp(1.5rem, 4vw, 3rem);
     }
@@ -42,10 +42,10 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(245,200,66,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(245,200,66,.04) 1px, transparent 1px),
-        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(0,207,255,.07) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(245,200,66,.06) 0%, transparent 60%);
+        linear-gradient(rgba(142,214,58,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,214,58,.04) 1px, transparent 1px),
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(56,194,232,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(142,214,58,.06) 0%, transparent 60%);
       background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
       pointer-events: none;
       z-index: 0;
@@ -54,7 +54,7 @@
     /* ─── SCROLLBAR ─── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
-    ::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--green-dim); border-radius: 3px; }
 
     /* ─── NAVBAR ─── */
     nav {
@@ -65,7 +65,7 @@
       align-items: center;
       justify-content: space-between;
       padding: .9rem clamp(1.2rem, 5vw, 4rem);
-      background: rgba(8,12,16,.85);
+      background: rgba(6,13,10,.85);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       animation: fadeDown .6s ease both;
@@ -75,10 +75,10 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.5rem;
       letter-spacing: .08em;
-      color: var(--amber);
+      color: var(--green);
       text-decoration: none;
     }
-    .nav-logo span { color: var(--spark); }
+    .nav-logo span { color: var(--blue); }
 
     .nav-links {
       display: flex;
@@ -93,13 +93,13 @@
       letter-spacing: .04em;
       transition: color .2s;
     }
-    .nav-links a:hover { color: var(--amber); }
+    .nav-links a:hover { color: var(--green); }
 
     .nav-cta {
       display: flex;
       align-items: center;
       gap: .5rem;
-      background: var(--amber);
+      background: var(--green);
       color: #000;
       font-weight: 700;
       font-size: .85rem;
@@ -109,10 +109,10 @@
       text-decoration: none;
       transition: background .2s, transform .15s;
     }
-    .nav-cta:hover { background: #ffe168; transform: translateY(-1px); }
+    .nav-cta:hover { background: #aae84a; transform: translateY(-1px); }
 
     .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .burger span { display: block; width: 24px; height: 2px; background: var(--amber); border-radius: 2px; transition: all .3s; }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--green); border-radius: 2px; transition: all .3s; }
 
     /* ─── HERO ─── */
     #hero {
@@ -139,9 +139,9 @@
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      background: rgba(245,200,66,.1);
-      border: 1px solid rgba(245,200,66,.3);
-      color: var(--amber);
+      background: rgba(142,214,58,.1);
+      border: 1px solid rgba(142,214,58,.3);
+      color: var(--green);
       font-size: .78rem;
       font-weight: 600;
       letter-spacing: .1em;
@@ -153,7 +153,7 @@
     }
     .badge-dot {
       width: 7px; height: 7px;
-      background: var(--amber);
+      background: var(--green);
       border-radius: 50%;
       animation: pulse 1.4s ease-in-out infinite;
     }
@@ -166,8 +166,8 @@
       margin-bottom: 1.5rem;
       animation: fadeUp .7s .2s ease both;
     }
-    .hero-title .line-accent { color: var(--amber); }
-    .hero-title .line-spark  { color: var(--spark); }
+    .hero-title .line-accent { color: var(--green); }
+    .hero-title .line-spark  { color: var(--blue); }
 
     .hero-desc {
       color: var(--text-muted);
@@ -188,7 +188,7 @@
       display: inline-flex;
       align-items: center;
       gap: .55rem;
-      background: var(--amber);
+      background: var(--green);
       color: #000;
       font-weight: 700;
       font-size: 1rem;
@@ -196,9 +196,9 @@
       border-radius: var(--radius);
       text-decoration: none;
       transition: background .2s, transform .15s, box-shadow .2s;
-      box-shadow: 0 0 30px rgba(245,200,66,.25);
+      box-shadow: 0 0 30px rgba(142,214,58,.25);
     }
-    .btn-primary:hover { background: #ffe168; transform: translateY(-2px); box-shadow: 0 0 50px rgba(245,200,66,.4); }
+    .btn-primary:hover { background: #aae84a; transform: translateY(-2px); box-shadow: 0 0 50px rgba(142,214,58,.4); }
 
     .btn-ghost {
       display: inline-flex;
@@ -213,7 +213,7 @@
       text-decoration: none;
       transition: border-color .2s, color .2s;
     }
-    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-ghost:hover { border-color: var(--green); color: var(--green); }
 
     .hero-stats {
       display: grid;
@@ -234,7 +234,7 @@
     .stat-number {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
-      color: var(--amber);
+      color: var(--green);
       display: block;
       letter-spacing: .05em;
     }
@@ -259,17 +259,17 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      border: 1.5px solid rgba(245,200,66,.2);
+      border: 1.5px solid rgba(142,214,58,.2);
       animation: ringPulse 2s ease-in-out infinite;
     }
-    .bolt-ring:nth-child(2) { inset: -20px; animation-delay: .4s; border-color: rgba(0,207,255,.15); }
-    .bolt-ring:nth-child(3) { inset: -40px; animation-delay: .8s; border-color: rgba(245,200,66,.08); }
+    .bolt-ring:nth-child(2) { inset: -20px; animation-delay: .4s; border-color: rgba(56,194,232,.15); }
+    .bolt-ring:nth-child(3) { inset: -40px; animation-delay: .8s; border-color: rgba(142,214,58,.08); }
 
     .bolt-core {
       position: absolute;
       inset: 20px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(245,200,66,.15) 0%, rgba(0,207,255,.05) 60%, transparent 100%);
+      background: radial-gradient(circle, rgba(245,200,66,.15) 0%, rgba(56,194,232,.05) 60%, transparent 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -277,7 +277,7 @@
 
     .bolt-svg {
       width: 130px;
-      filter: drop-shadow(0 0 20px rgba(245,200,66,.8)) drop-shadow(0 0 50px rgba(245,200,66,.3));
+      filter: drop-shadow(0 0 20px rgba(142,214,58,.8)) drop-shadow(0 0 50px rgba(142,214,58,.3));
       animation: boltFlash 3s ease-in-out infinite;
     }
 
@@ -307,7 +307,7 @@
       color: var(--text-muted);
       white-space: nowrap;
     }
-    .trust-item svg { color: var(--amber); flex-shrink: 0; }
+    .trust-item svg { color: var(--green); flex-shrink: 0; }
 
     /* ─── SECTION BASE ─── */
     section { position: relative; z-index: 1; }
@@ -323,7 +323,7 @@
       font-weight: 700;
       letter-spacing: .15em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--green);
       margin-bottom: .8rem;
     }
     .section-title {
@@ -364,8 +364,8 @@
 
     .service-icon {
       width: 52px; height: 52px;
-      background: rgba(245,200,66,.1);
-      border: 1px solid rgba(245,200,66,.2);
+      background: rgba(142,214,58,.1);
+      border: 1px solid rgba(142,214,58,.2);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -397,14 +397,14 @@
       letter-spacing: .06em;
       padding: .3rem .75rem;
       border-radius: 50px;
-      background: rgba(245,200,66,.08);
-      border: 1px solid rgba(245,200,66,.18);
-      color: var(--amber);
+      background: rgba(142,214,58,.08);
+      border: 1px solid rgba(142,214,58,.18);
+      color: var(--green);
     }
     .tag.blue {
-      background: rgba(0,207,255,.08);
-      border-color: rgba(0,207,255,.18);
-      color: var(--spark);
+      background: rgba(56,194,232,.08);
+      border-color: rgba(56,194,232,.18);
+      color: var(--blue);
     }
     .tag.red {
       background: rgba(255,76,48,.08);
@@ -432,7 +432,7 @@
       border-radius: var(--radius);
       transition: border-color .2s, transform .2s;
     }
-    .why-item:hover { border-color: rgba(245,200,66,.35); transform: translateX(4px); }
+    .why-item:hover { border-color: rgba(142,214,58,.35); transform: translateX(4px); }
 
     .why-icon {
       font-size: 1.5rem;
@@ -467,16 +467,16 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 0%, rgba(245,200,66,.08) 0%, transparent 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(142,214,58,.08) 0%, transparent 70%);
     }
     .decennale-number {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 7rem;
       line-height: 1;
-      color: var(--amber);
+      color: var(--green);
       display: block;
       letter-spacing: -.02em;
-      filter: drop-shadow(0 0 30px rgba(245,200,66,.4));
+      filter: drop-shadow(0 0 30px rgba(142,214,58,.4));
     }
     .decennale-label {
       font-size: 1rem;
@@ -515,9 +515,9 @@
       font-size: .95rem;
       transition: border-color .2s;
     }
-    .city-card:hover { border-color: rgba(245,200,66,.35); }
-    .city-pin { color: var(--amber); font-size: 1.1rem; }
-    .city-main { color: var(--amber); }
+    .city-card:hover { border-color: rgba(142,214,58,.35); }
+    .city-pin { color: var(--green); font-size: 1.1rem; }
+    .city-main { color: var(--green); }
 
     .zone-info {
       display: flex;
@@ -536,7 +536,7 @@
       color: var(--text-muted);
       font-size: .92rem;
     }
-    .info-block a { color: var(--amber); text-decoration: none; }
+    .info-block a { color: var(--green); text-decoration: none; }
     .info-block a:hover { text-decoration: underline; }
 
     /* ─── CONTACT ─── */
@@ -561,21 +561,21 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--amber), var(--spark), var(--amber));
+      background: linear-gradient(90deg, var(--green), var(--blue), var(--green));
     }
 
     .contact-phone {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2.8rem, 6vw, 5rem);
       letter-spacing: .06em;
-      color: var(--amber);
+      color: var(--green);
       display: block;
       text-decoration: none;
-      filter: drop-shadow(0 0 30px rgba(245,200,66,.35));
+      filter: drop-shadow(0 0 30px rgba(142,214,58,.35));
       transition: filter .2s;
       margin: 1.5rem 0;
     }
-    .contact-phone:hover { filter: drop-shadow(0 0 50px rgba(245,200,66,.7)); }
+    .contact-phone:hover { filter: drop-shadow(0 0 50px rgba(142,214,58,.7)); }
 
     .contact-meta {
       display: flex;
@@ -591,7 +591,7 @@
       color: var(--text-muted);
       font-size: .9rem;
     }
-    .contact-meta-item svg { color: var(--amber); }
+    .contact-meta-item svg { color: var(--green); }
 
     .open-pill {
       display: inline-flex;
@@ -690,10 +690,10 @@
     .footer-brand {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.3rem;
-      color: var(--amber);
+      color: var(--green);
       letter-spacing: .08em;
     }
-    .footer-brand span { color: var(--spark); }
+    .footer-brand span { color: var(--blue); }
 
     .footer-copy { color: var(--text-muted); font-size: .82rem; }
 
@@ -719,8 +719,8 @@
       50%       { transform: scale(1.04); opacity: .3; }
     }
     @keyframes boltFlash {
-      0%, 85%, 100% { opacity: 1; filter: drop-shadow(0 0 20px rgba(245,200,66,.8)) drop-shadow(0 0 50px rgba(245,200,66,.3)); }
-      90%            { opacity: .6; filter: drop-shadow(0 0 40px rgba(245,200,66,1)) drop-shadow(0 0 80px rgba(0,207,255,.5)); }
+      0%, 85%, 100% { opacity: 1; filter: drop-shadow(0 0 20px rgba(142,214,58,.8)) drop-shadow(0 0 50px rgba(142,214,58,.3)); }
+      90%            { opacity: .6; filter: drop-shadow(0 0 40px rgba(142,214,58,1)) drop-shadow(0 0 80px rgba(56,194,232,.5)); }
     }
     @keyframes scrollLeft {
       from { transform: translateX(0); }
@@ -765,7 +765,7 @@
       flex-direction: column;
       position: fixed;
       top: 56px; left: 0; right: 0;
-      background: rgba(8,12,16,.97);
+      background: rgba(6,13,10,.97);
       border-bottom: 1px solid var(--border);
       padding: 1.5rem 2rem;
       gap: 1.2rem;
@@ -843,12 +843,12 @@
         <div class="bolt-ring"></div>
         <div class="bolt-core">
           <svg class="bolt-svg" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="#F5C842" stroke="#F5C842" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="#8ED63A" stroke="#8ED63A" stroke-width="2" stroke-linejoin="round"/>
             <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="url(#boltGrad)"/>
             <defs>
               <linearGradient id="boltGrad" x1="50" y1="5" x2="50" y2="135" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#FFE168"/>
-                <stop offset="100%" stop-color="#F5C842" stop-opacity=".7"/>
+                <stop offset="0%" stop-color="#C8F06A"/>
+                <stop offset="100%" stop-color="#38C2E8" stop-opacity=".9"/>
               </linearGradient>
             </defs>
           </svg>
@@ -1065,7 +1065,7 @@
         </div>
         <div class="info-block reveal">
           <h3>🕐 Horaires</h3>
-          <p>Ouvert <strong style="color:var(--amber)">24h/24</strong> — tous les jours de la semaine.</p>
+          <p>Ouvert <strong style="color:var(--green)">24h/24</strong> — tous les jours de la semaine.</p>
         </div>
       </div>
     </div>
