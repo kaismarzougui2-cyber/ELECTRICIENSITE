@@ -73,13 +73,16 @@
     }
 
     .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: .08em;
-      color: var(--green);
+      display: flex;
+      align-items: center;
       text-decoration: none;
     }
-    .nav-logo span { color: var(--blue); }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-logo span { display: none; }
 
     .nav-links {
       display: flex;
@@ -95,6 +98,64 @@
       transition: color .2s;
     }
     .nav-links a:hover { color: var(--green); }
+
+    /* ─── HERO LOGO ─── */
+    .hero-logo-wrap {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-logo-wrap .bolt-ring { position: absolute; inset: 0; }
+    .hero-logo-img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+      animation: boltFlash 4s ease-in-out infinite;
+      filter: drop-shadow(0 8px 24px rgba(107,191,30,.25));
+    }
+
+    /* ─── GALLERY ─── */
+    #galerie { background: var(--bg-surface); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .gallery-item {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.13);
+      transition: transform .3s ease, box-shadow .3s ease;
+      cursor: zoom-in;
+    }
+    .gallery-item:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 52px rgba(0,0,0,.2);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    @media (max-width: 700px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item img { height: 240px; }
+    }
+
+    /* ─── FOOTER LOGO ─── */
+    .footer-logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
 
     .nav-cta {
       display: flex;
@@ -289,8 +350,19 @@
       background: var(--green-light);
       border-top: 1px solid rgba(107,191,30,.2);
       border-bottom: 1px solid rgba(107,191,30,.2);
-      padding: 1rem clamp(1.2rem, 6vw, 6rem);
+      padding: .6rem clamp(1.2rem, 6vw, 6rem);
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .trust-logo {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-right: 1px solid rgba(107,191,30,.25);
+      padding-right: 1.5rem;
     }
     .trust-track {
       display: flex;
@@ -779,10 +851,11 @@
 
 <!-- ─── NAVBAR ─── -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">ElecAssain<span>Pro</span></a>
+  <a href="#hero" class="nav-logo"><img src="logo-elec.png" alt="ElecAssain Pro"><span>ElecAssainPro</span></a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
     <li><a href="#pourquoi">Pourquoi nous</a></li>
+    <li><a href="#galerie">Galerie</a></li>
     <li><a href="#zone">Zone</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -840,22 +913,11 @@
     </div>
 
     <div class="hero-visual">
-      <div class="bolt-container">
+      <div class="hero-logo-wrap">
         <div class="bolt-ring"></div>
         <div class="bolt-ring"></div>
         <div class="bolt-ring"></div>
-        <div class="bolt-core">
-          <svg class="bolt-svg" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="#8ED63A" stroke="#8ED63A" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M58 5L10 78H48L42 135L90 62H52L58 5Z" fill="url(#boltGrad)"/>
-            <defs>
-              <linearGradient id="boltGrad" x1="50" y1="5" x2="50" y2="135" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#C8F06A"/>
-                <stop offset="100%" stop-color="#38C2E8" stop-opacity=".9"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+        <img src="logo-elec.png" alt="ElecAssain Pro" class="hero-logo-img">
       </div>
     </div>
   </div>
@@ -863,6 +925,7 @@
 
 <!-- ─── TRUST BAR ─── -->
 <div class="trust-bar">
+  <img src="logo-elec.png" alt="ElecAssain Pro" class="trust-logo">
   <div class="trust-track">
     <!-- repeated twice for seamless loop -->
     <div class="trust-item">
@@ -1075,6 +1138,26 @@
   </div>
 </section>
 
+<!-- ─── GALERIE ─── -->
+<section id="galerie">
+  <div class="section-pad">
+    <p class="section-label reveal">Nos réalisations</p>
+    <h2 class="section-title reveal">Notre travail en images</h2>
+    <p class="section-sub reveal">Quelques exemples de chantiers réalisés par notre équipe en Guyane.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <img src="IMG_1129.jpeg" alt="Réalisation ElecAssain Pro" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="IMG_1130.jpeg" alt="Réalisation ElecAssain Pro" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="IMG_1131.jpeg" alt="Réalisation ElecAssain Pro" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── CONTACT ─── -->
 <section id="contact">
   <div class="section-pad">
@@ -1129,7 +1212,7 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-brand">ElecAssain<span>Pro</span></div>
+  <img src="logo-elec.png" alt="ElecAssain Pro" class="footer-logo-img">
   <p class="footer-copy">© 2025 ElecAssain Pro — Matoury, Guyane française</p>
   <p class="footer-copy">Électricité · Plomberie · Rénovation</p>
 </footer>
